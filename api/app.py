@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    obj = storage.jop()
+    obj = storage.job()
 
     return render_template('home.html', obj=obj)
 
