@@ -15,6 +15,11 @@ class DBStorage:
         obj = self.__session.query(cls).all()
         return obj
 
+    def job(self):
+        from model.base_model import Jobs, User
+        obj = self.__session.query(Jobs).filter(Jobs.user_id == User.id)
+        return obj
+
     def save(self):
         self.__session.commit()
 

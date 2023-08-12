@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% for objs in obj %}
+		<div style="width: 500px;">
+		<h1>Title: {{ objs.title }}</h1>
+		<p><strong>Job Type:</strong> {{ objs.job_type }}</p>
+    		<p><strong>Location:</strong> {{ objs.location }}</p>
+    		<p><strong>Level:</strong> {{ objs.level }}</p>
+    		<p><strong>Vacancies:</strong> {{ objs.vacancies }} </p>
+    		<p><strong>Salary:</strong> {{ objs.salary }} </p>
+    		<p><strong>Deadline:</strong> {{ objs.deadline }} </p>
+    		<p><strong>Description:</strong> {{  objs.description }}</p>
+		</div>
+	{% endfor %}
+{% endblock %}
