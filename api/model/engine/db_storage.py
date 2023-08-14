@@ -6,7 +6,7 @@ class DBStorage:
     __session = None
     __engine = None
     def __init__(self):
-        self.__engine = create_engine('mysql://root:root@localhost/my_free')
+        self.__engine = create_engine('mysql+pymysql://Yordi:Yordi@localhost/my_free')
 
     def new(self, obj):
         self.__session.add(obj)
@@ -17,7 +17,7 @@ class DBStorage:
 
     def job(self):
         from model.base_model import Jobs, User
-        obj = self.__session.query(Jobs).filter(Jobs.user_id == User.id)
+        obj = self.__session.query(Jobs).filter(Jobs.user_email == User.email)
         return obj
 
     def save(self):
@@ -33,4 +33,15 @@ class DBStorage:
     def delete(self, obj):
         if obj is not None:
             self.__session.delete(obj)
-
+    
+    def query(self, field):
+        from model.base_model import User
+        obj = self.__session.query(User).filter(User.id == field).first()
+        return obj
+    
+    def query_email(self, field):
+        from model.base_model import User
+        obj = self.__session.query(User).filter(User.email == field).first()
+        return obj
+    def close(self):
+        self.__session.close()
