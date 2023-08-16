@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-  <div class="media">
-    <img class="rounded-circle account-img" src="userimage.jpg">
-    <div class="media-body">
+<div class="modal-dialog modal-dialog-scrollable">
+<div class="content-section ">
       <h2 class="account-heading">{{ current_user.first_name }} {{ current_user.last_name }}</h2>
       <p class="text-secondary">Email: {{ current_user.email }}</p>
       <p class="text-secondary">Phone number: {{ current_user.phone }}</p>
@@ -14,9 +12,9 @@
         <p class="text-secondary">CV Status: Not Uploaded</p>
       {% endif %}
 
-    </div>
-
   </div>
+</div>
+  <div>
   <!-- FORM HERE -->
   <form method="POST" action=""  enctype="multipart/form-data">
     <div class="form-group">
@@ -33,9 +31,12 @@
       {{ form.submit(class="btn btn-outline-info") }}
     </div>
   </form>
-
-  <div class="border-top pt-3">
-    <a class="ml-2" href="{{ url_for('update') }}"><button class="btn btn-outline-info">Update Profile</button></a>
-  </div>
 </div>
+
+
+<div class="modal-footer">
+    <a class="ml-2" href="{{ url_for('update') }}"><button class="btn btn-secondary">Update Profile</button></a>
+    <a class="btn btn-secondary" href="{{ url_for('post') }}">Posts a Job</a>
+</div>
+
 {% endblock content %}

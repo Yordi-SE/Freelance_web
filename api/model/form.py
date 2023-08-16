@@ -81,9 +81,29 @@ class PostForm(FlaskForm):
     
     description = TextAreaField('Job description', validators=[DataRequired(), Length(max=1000)])
 
-    submit = SubmitField('Sign Up')
+    submit = SubmitField('Post')
 
     def validate_email(self, email):
         
         if current_user.email != email.data:
             raise ValidationError('Please Use Your Own Account Email')
+
+class PostEditForm(FlaskForm):
+    title = StringField('Job title', validators=[DataRequired(), Length(max=200)])
+
+    job_type = StringField('job type', validators=[DataRequired(), Length(max=100)])
+    
+    location = StringField('location', validators={DataRequired()})
+
+    level = StringField('level', validators=[DataRequired(), Length(max=200)])
+
+    vacancies = IntegerField('vacancies', validators=[DataRequired()])
+
+    salary = IntegerField('Salary')
+
+    deadline = StringField('Application Deadline', render_kw={"placeholder": "DD/MM/YYYY"}, validators={DataRequired()})   
+    
+    description = TextAreaField('Job description', validators=[DataRequired(), Length(max=1000)])
+
+    submit = SubmitField('Post')
+

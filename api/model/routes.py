@@ -1,8 +1,8 @@
-from flask import Flask, render_template, url_for, redirect, flash, send_from_directory
+from flask import Flask, render_template, url_for, redirect, flash, send_from_directory, abort
 from sqlalchemy.exc import IntegrityError
 from model import storage, app, bcrypt
 from werkzeug.utils import secure_filename
-from model.form import RegistrationForm, LoginForm, UpdateForm, UploadCv, PostForm
+from model.form import RegistrationForm, LoginForm, UpdateForm, UploadCv, PostForm, PostEditForm
 import os
 from model.base_model import User, Jobs
 from flask_login import login_user, login_required, current_user, logout_user
@@ -71,6 +71,8 @@ def logout():
 @app.route("/account", methods=['POST', 'GET'])
 @login_required
 def account():
+    jobs = storage.query_email_job(current_user.email)
+
     form = UploadCv()
     if form.validate_on_submit():
         pdf_file = form.cv.data
@@ -84,7 +86,7 @@ def account():
         storage.save()
         flash('file uploaded successfully!', 'success')
         return redirect(url_for('account'))
-    return render_template('account.html', form=form, title='Account')
+    return render_template('account.html', form=form, title='Account', jobs=jobs)
 
 @app.route("/update", methods={'POST', 'GET'})
 @login_required
@@ -124,3 +126,63 @@ def post():
         flash("Job post successfully!", "success")
         return redirect(url_for('home'))
     return render_template('post.html', form=form)
+
+@app.route("/post/<int:post_id>")
+@login_required
+def postId(post_id):
+    objs = storage.query_job(post_id)
+    if objs:
+        return render_template('edit_post.html', title=objs.title, objs=objs)
+    abort(404)
+
+@app.route("/post/<int:post_id>/update", methods=['POST', 'GET'])
+@login_required
+def post_update(post_id):
+    objs = storage.query_job(post_id)
+    if objs:
+        if objs.user_email != current_user.email:
+            return render_template('forbiden.html')
+    form = PostEditForm()
+    print('form.errors')
+    if form.validate_on_submit():
+        objs.vacancies = form.vacancies.data
+        objs.deadline = form.deadline.data
+        objs.job_type = form.job_type.data
+        objs.description = form.description.data
+        objs.level = form.level.data
+        objs.location = form.location.data
+        objs.salary = form.salary.data
+        objs.title = form.title.data
+        storage.save()
+        flash('You updated the successfully!', 'success')
+        return redirect(url_for('postId', post_id=post_id))
+    elif request.method == 'GET':
+        form.vacancies.data = objs.vacancies
+        form.deadline.data = objs.deadline
+        form.job_type.data = objs.job_type
+        form.description.data = objs.description
+        form.level.data = objs.level
+        form.location.data = objs.location
+        form.title.data = objs.title
+        form.salary.data = objs.salary
+    return render_template('post_update.html', title='Update Post', form=form)
+
+@app.route("/delete/<int:post_id>", methods=['POST', 'GET'])
+@login_required
+def delete(post_id):
+    objs = storage.query_job(post_id)
+    if objs:
+        if request.method == 'GET':
+            return render_template(url_for('postId', post_id=post_id), title=objs.title)
+        if objs.user_email != current_user.email:
+            return render_template('forbiden.html')
+        else:
+            storage.delete(objs)
+            storage.save()
+            flash('You deleted the post', 'danger')
+            return redirect(url_for('home'))
+    flash('Post not found', 'danger')
+    return redirect(url_for('home'))
+
+
+

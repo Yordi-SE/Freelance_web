@@ -45,3 +45,13 @@ class DBStorage:
         return obj
     def close(self):
         self.__session.close()
+    
+    def query_job(self, field):
+        from model.base_model import Jobs
+        obj = self.__session.query(Jobs).filter(Jobs.id == field).first()
+        return obj
+    
+    def query_email_job(self, field):
+        from model.base_model import Jobs
+        obj = self.__session.query(Jobs).filter(Jobs.user_email == field).all()
+        return obj

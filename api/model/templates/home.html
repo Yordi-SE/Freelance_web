@@ -5,7 +5,9 @@
         <div class="container mt-5">
             <div class="jumbotron jumbotron-fluid bg-dark text-white">
                 <div class="container text-center">
-                    <h1 class="display-3">{{ objs.title }}</h1>
+                    <h1 class="display-3"><a href="{{ url_for('postId', post_id=objs.id) }}">
+                        {{ objs.title }}
+                    </a></h1>
                     <p class="lead">{{ objs.job_type }} - {{ objs.location }}</p>
                     <p>{{ objs.level }} | {{ objs.vacancies }} vacancies</p>
                     <p>Salary: {{ objs.salary }}</p>
