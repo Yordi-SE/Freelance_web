@@ -76,12 +76,12 @@ def account():
     form = UploadCv()
     if form.validate_on_submit():
         pdf_file = form.cv.data
-        filename = secure_filename(pdf_file.filename)
+        filename = '({})_{}'.format(current_user.id, secure_filename(pdf_file.filename))
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        pdf_file.save(filepath)
         if current_user.filename:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], current_user.filename)
             os.remove(file_path)
+        pdf_file.save(filepath)
         current_user.filename = filename
         storage.save()
         flash('file uploaded successfully!', 'success')
@@ -112,7 +112,7 @@ def update():
 
 @app.route("/download")
 @login_required
-def download():
+def serve_file():
     return send_from_directory(app.config['UPLOAD_FOLDER'], current_user.filename)
 
 @app.route("/post", methods=['POST', 'GET'])

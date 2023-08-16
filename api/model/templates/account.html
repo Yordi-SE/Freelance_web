@@ -7,7 +7,7 @@
       <p class="text-secondary">Phone number: {{ current_user.phone }}</p>
       <p class="text-secondary">Birthdate: {{ current_user.birthdate }}</p>
       {% if current_user.filename %}
-        <p class="text-secondary">CV Status: <a href="{{ url_for('download') }}">Downlad CV</a></p>
+        <p class="text-secondary">CV Status: Uploaded</p>
       {% else %}
         <p class="text-secondary">CV Status: Not Uploaded</p>
       {% endif %}
@@ -37,6 +37,9 @@
 <div class="modal-footer">
     <a class="ml-2" href="{{ url_for('update') }}"><button class="btn btn-secondary">Update Profile</button></a>
     <a class="btn btn-secondary" href="{{ url_for('post') }}">Posts a Job</a>
+    {% if current_user.filename %}
+        <a href="{{ url_for('serve_file') }}" class="ml-2" target="_blank"><button class="btn btn-secondary">View CV</button></a>
+      {% endif %}
 </div>
 
 {% endblock content %}

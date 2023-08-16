@@ -5,7 +5,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'This&is&That'
-UPLOAD_FOLDER = 'model/uploads'
+UPLOAD_FOLDER = '/home/ubuntu/Freelance/api/model/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 bcrypt = Bcrypt(app)
