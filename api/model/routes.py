@@ -9,13 +9,27 @@ from flask_login import login_user, login_required, current_user, logout_user
 from flask import request
 
 
-@app.route("/")
+@app.route("/", methods=['POST', 'GET'])
 @login_required
 def home():
-    obj = storage.job()
+    lim = 5
+    page = request.args.get('page', 1, type=int)
+    obj = storage.query_page(page, lim)
+    nu = storage.job()
+    num_of_row = nu.count()
+    if num_of_row % lim == 0:
+        num_of_page = (num_of_row // lim)
+    else:
+        num_of_page = (num_of_row // lim) + 1
+    page_range = 2
+    available_pages = []
+    for p in range(max(1, page - page_range), min(num_of_page + 1, page + page_range + 1)):
+        available_pages.append(p)
+
+  
     title='Home'
 
-    return render_template('home.html', obj=obj, title=title)
+    return render_template('home.html', obj=obj, title=title, page=page, num_of_page=num_of_page, num_of_row=num_of_row, available_pages=available_pages)
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -184,5 +198,30 @@ def delete(post_id):
     flash('Post not found', 'danger')
     return redirect(url_for('home'))
 
+@app.route("/my_posts")
+@login_required
+def my_posts():
+    lim = 5
+    page = request.args.get('page', 1, type=int)
+    obj = storage.query_page_email(current_user.email, page, lim)
+    if not obj and page == 1:
+        flash('You don\'t posts yet', 'danger')
+        return redirect(url_for('home'))
+    elif not obj:
+        flash('No more posts', 'success')
+    
+    nu = storage.query_email_job(current_user.email)
+    num_of_row = nu.count()
+    if num_of_row % lim == 0:
+        num_of_page = (num_of_row // lim)
+    else:
+        num_of_page = (num_of_row // lim) + 1
+    page_range = 3
+    available_pages = []
+    for p in range(max(1, page - page_range), min(num_of_page + 1, page + page_range + 1)):
+        available_pages.append(p)
 
+    title='My Posts'
+
+    return render_template('my_posts.html', obj=obj, title=title, page=page, num_of_page=num_of_page, num_of_row=num_of_row, available_pages=available_pages, page_range=page_range)
 

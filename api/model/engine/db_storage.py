@@ -53,5 +53,17 @@ class DBStorage:
     
     def query_email_job(self, field):
         from model.base_model import Jobs
-        obj = self.__session.query(Jobs).filter(Jobs.user_email == field).all()
+        obj = self.__session.query(Jobs).filter(Jobs.user_email == field)
+        return obj
+    
+    def query_page(self, page, lim):
+        from model.base_model import Jobs
+        off = (page - 1) * lim
+        obj = self.__session.query(Jobs).order_by(Jobs.id.desc()).offset(off).limit(lim).all()
+        return obj
+    
+    def query_page_email(self, field, page, lim):
+        from model.base_model import Jobs
+        off = (page - 1) * lim
+        obj = self.__session.query(Jobs).filter(Jobs.user_email == field).offset(off).limit(lim).all()
         return obj

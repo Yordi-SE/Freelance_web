@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField, TelField, PasswordField, SubmitField, ValidationError, IntegerField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, NumberRange
 from model import storage
 
 
@@ -107,3 +107,6 @@ class PostEditForm(FlaskForm):
 
     submit = SubmitField('Post')
 
+class Page(FlaskForm):
+    num = IntegerField('Page Number', validators=[DataRequired(), NumberRange(min=1)])
+    submit = SubmitField('Go to')
