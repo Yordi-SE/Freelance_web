@@ -51,6 +51,11 @@ class DBStorage:
         obj = self.__session.query(Jobs).filter(Jobs.id == field).first()
         return obj
     
+    def query_job_title(self, field):
+        from model.base_model import Jobs
+        obj = self.__session.query(Jobs).filter(Jobs.title == field).all()
+        return obj
+    
     def query_email_job(self, field):
         from model.base_model import Jobs
         obj = self.__session.query(Jobs).filter(Jobs.user_email == field)

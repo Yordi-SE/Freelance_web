@@ -85,6 +85,10 @@ form {
 }
 @media screen and (max-width: 400px) {
   form {
+
     width: 320px;
+  }
+  #bro {
+    font-size: medium;
   }
 }

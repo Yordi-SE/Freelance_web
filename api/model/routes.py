@@ -12,6 +12,11 @@ from flask import request
 @app.route("/", methods=['POST', 'GET'])
 @login_required
 def home():
+
+    if request.form:
+        query = request.form.get('query')
+        jobs = storage.query_job_title(query)
+        
     lim = 5
     page = request.args.get('page', 1, type=int)
     obj = storage.query_page(page, lim)
@@ -28,6 +33,13 @@ def home():
 
   
     title='Home'
+    if request.form:
+        query = request.form.get('query')
+        obj = storage.query_job_title(query)
+        if not obj:
+            abort(404)
+        else:
+            return render_template('home.html', obj=obj, title=title, page=page, num_of_page=num_of_page, num_of_row=num_of_row, available_pages=available_pages)
 
     return render_template('home.html', obj=obj, title=title, page=page, num_of_page=num_of_page, num_of_row=num_of_row, available_pages=available_pages)
 
