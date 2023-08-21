@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="modal-dialog modal-dialog-scrollable">
+<div class="content-section ">
+      <h2 class="account-heading">{{ current_user.first_name }} {{ current_user.last_name }}</h2>
+      <p class="text-secondary">Email: {{ current_user.email }}</p>
+      <p class="text-secondary">Phone number: {{ current_user.phone }}</p>
+      <p class="text-secondary">Birthdate: {{ current_user.birthdate }}</p>
+      {% if current_user.filename %}
+        <p class="text-secondary">CV Status: Uploaded</p>
+      {% else %}
+        <p class="text-secondary">CV Status: Not Uploaded</p>
+      {% endif %}
+
+  </div>
+</div>
+  <div>
+  <!-- FORM HERE -->
+  <form method="POST" action=""  enctype="multipart/form-data">
+    <div class="form-group">
+      {{ form.hidden_tag() }}
+      {{ form.cv.label() }}
+      {{ form.cv(class="form-control-file") }}
+      {% if form.cv.errors %}
+        {% for error in form.cv.errors %}
+          <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
+</div>
+
+
+<div class="modal-footer">
+    <a class="ml-2" href="{{ url_for('blue.update') }}"><button class="btn btn-secondary">Update Profile</button></a>
+    <a class="btn btn-secondary" href="{{ url_for('blue.post') }}">Posts a Job</a>
+    {% if current_user.filename %}
+        <a href="{{ url_for('blue.serve_file') }}" class="ml-2" target="_blank"><button class="btn btn-secondary">View CV</button></a>
+      {% endif %}
+</div>
+
+{% endblock content %}
