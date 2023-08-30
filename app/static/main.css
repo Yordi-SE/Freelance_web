@@ -94,3 +94,9 @@ form {
     font-size: large;
   }
 }
+#apply {
+  height: 50px;
+  background-color: #cbd5db;
+  text-align: center;
+  line-height: 50px;
+}

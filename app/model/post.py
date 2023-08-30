@@ -23,9 +23,14 @@ def post():
 @blue.route("/post/<int:post_id>")
 @login_required
 def postId(post_id):
+    user_job_id = storage.query_email_user_job(current_user.email)
+    if post_id in user_job_id:
+        applied = True
+    else:
+        applied = False
     objs = storage.query_job(post_id)
     if objs:
-        return render_template('edit_post.html', title=objs.title, objs=objs)
+        return render_template('edit_post.html', applied=applied, title=objs.title, objs=objs)
     abort(404)
 
 @blue.route("/post/<int:post_id>/update", methods=['POST', 'GET'])

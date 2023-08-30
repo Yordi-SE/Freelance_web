@@ -42,3 +42,9 @@ class Jobs(Base):
 
     def __repr__(self):
         return "{} - {} -> {}".format(self.id, self.user_email, self.title)
+
+class Applied(Base):
+    __tablename__ = 'applied'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_email = Column(String(200), nullable=False)
+    job_id = Column(Integer, nullable=False)

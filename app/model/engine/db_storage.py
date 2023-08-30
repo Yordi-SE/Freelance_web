@@ -61,6 +61,11 @@ class DBStorage:
         obj = self.__session.query(Jobs).filter(Jobs.user_email == field)
         return obj
     
+    def query_email_user_job(self, field):
+        from model.base_model import Applied
+        obj = self.__session.query(Applied.job_id).filter(Applied.user_email == field)
+        return obj
+
     def query_page(self, page, lim):
         from model.base_model import Jobs
         off = (page - 1) * lim

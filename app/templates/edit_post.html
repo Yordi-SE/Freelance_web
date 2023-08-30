@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
+        <div class="m-auto  display-5   container" id="apply">
+          <P>Please <a class="warning"  href="{{ url_for('blue.account') }}">Upload</a> your <strong>CV</strong> to apply for the job</P>
+        </div>
         <div class="container mt-5">
             <div class="jumbotron jumbotron-fluid bg-dark text-white">
                 <div class="container text-center">
@@ -21,9 +24,13 @@
                     <p class="card-text">{{ objs.description }}</p>
                 </div>
             </div>
+  
             <div style="margin-bottom: 45px;"> 
               <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.post_update', post_id=objs.id) }}">Update Post</a>
               <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button>
+              {% if current_user.filename and applied %}
+              <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.apply', post_id=objs.id) }}">Apply</a>
+              {% endif %}
             </div>
         </div>
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
