@@ -1,4 +1,4 @@
-from app import bcrypt
+from app import bcrypt, mail
 from flask import render_template, url_for, redirect, flash, send_from_directory, abort
 from model import storage, blue
 from werkzeug.utils import secure_filename

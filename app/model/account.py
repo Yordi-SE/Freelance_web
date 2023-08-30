@@ -1,11 +1,39 @@
-from app import app
+from app import app, mail
 from flask import render_template, url_for, redirect, flash, send_from_directory, abort
 from model import storage, blue
 from werkzeug.utils import secure_filename
 from model.form import UpdateForm, UploadCv
 import os
 from flask_login import login_user, login_required, current_user, logout_user
+from flask_mail import Message
 from flask import request
+
+def send_email(author):
+    msg = Message('User Application', sender="noreply@realyordanos.tech", recipients=[author])
+    msg.body = """Applicant info:
+Full name: {} {}
+Email: {}
+Phone: {}
+Birthdate: {}
+Cv: Please find the attached cv file
+""".format(current_user.first_name, current_user.last_name, current_user.email, current_user.phone, current_user.birthdate)
+    with app.open_resource('/home/ubuntu/Freelance/api/model/uploads/{}'.format(current_user.filename)) as pdf:
+        msg.attach(filename='Applicant_cv.pdf', content_type='application/pdf', data=pdf.read())
+    
+    mail.send(msg)
+    return 'Email sent'
+
+@blue.route("/apply/<int:post_id>")
+@login_required
+def apply(post_id):
+    objs = storage.query_job(post_id)
+    feedback = send_email(objs.user_email)
+    if feedback == 'Email sent':
+        flash("You applied for the job", "success")
+    else:
+        flash("Failed","warning")
+    return redirect(url_for('blue.postId', post_id=objs.id))
+
 
 @blue.route("/account", methods=['POST', 'GET'])
 @login_required
@@ -25,7 +53,7 @@ def account():
         storage.save()
         flash('file uploaded successfully!', 'success')
         return redirect(url_for('blue.account'))
-    return render_template('account.html', form=form, title='blue', jobs=jobs)
+    return render_template('account.html', form=form, title='account', jobs=jobs)
 
 @blue.route("/update", methods={'POST', 'GET'})
 @login_required
