@@ -90,13 +90,12 @@ form {
 
     width: 320px;
   }
-  #bro {
-    font-size: large;
+  #bro, #h11 {
+    font-size: 38px;
   }
 }
+
 #apply {
-  height: 50px;
-  background-color: #cbd5db;
-  text-align: center;
-  line-height: 50px;
+	height: 50px;
+  	line-height: 50px;
 }

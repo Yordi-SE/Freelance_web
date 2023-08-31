@@ -23,11 +23,13 @@ def post():
 @blue.route("/post/<int:post_id>")
 @login_required
 def postId(post_id):
+    applied = False
     user_job_id = storage.query_email_user_job(current_user.email)
-    if post_id in user_job_id:
-        applied = True
-    else:
-        applied = False
+    if user_job_id:
+        for posts in user_job_id:
+            if post_id in posts:
+                applied = True
+                break
     objs = storage.query_job(post_id)
     if objs:
         return render_template('edit_post.html', applied=applied, title=objs.title, objs=objs)

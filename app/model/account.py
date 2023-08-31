@@ -3,13 +3,14 @@ from flask import render_template, url_for, redirect, flash, send_from_directory
 from model import storage, blue
 from werkzeug.utils import secure_filename
 from model.form import UpdateForm, UploadCv
+from model.base_model import Applied
 import os
 from flask_login import login_user, login_required, current_user, logout_user
 from flask_mail import Message
 from flask import request
 
-def send_email(author):
-    msg = Message('User Application', sender="noreply@realyordanos.tech", recipients=[author])
+def send_email(author,title):
+    msg = Message('User Application on job {}'.format(title), sender="noreply@realyordanos.tech", recipients=[author])
     msg.body = """Applicant info:
 Full name: {} {}
 Email: {}
@@ -17,7 +18,7 @@ Phone: {}
 Birthdate: {}
 Cv: Please find the attached cv file
 """.format(current_user.first_name, current_user.last_name, current_user.email, current_user.phone, current_user.birthdate)
-    with app.open_resource('/home/ubuntu/Freelance/api/model/uploads/{}'.format(current_user.filename)) as pdf:
+    with app.open_resource('/home/ubuntu/Freelance/app/uploads/{}'.format(current_user.filename)) as pdf:
         msg.attach(filename='Applicant_cv.pdf', content_type='application/pdf', data=pdf.read())
     
     mail.send(msg)
@@ -27,11 +28,15 @@ Cv: Please find the attached cv file
 @login_required
 def apply(post_id):
     objs = storage.query_job(post_id)
-    feedback = send_email(objs.user_email)
+    applied = Applied(user_email=current_user.email, job_id=post_id)
+    storage.new(applied)
+    storage.save()
+    feedback = send_email(objs.user_email, objs.title)
     if feedback == 'Email sent':
         flash("You applied for the job", "success")
     else:
         flash("Failed","warning")
+        print("Failed")
     return redirect(url_for('blue.postId', post_id=objs.id))
 
 

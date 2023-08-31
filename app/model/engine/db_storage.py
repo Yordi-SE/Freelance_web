@@ -63,7 +63,7 @@ class DBStorage:
     
     def query_email_user_job(self, field):
         from model.base_model import Applied
-        obj = self.__session.query(Applied.job_id).filter(Applied.user_email == field)
+        obj = self.__session.query(Applied.job_id).filter(Applied.user_email == field).all()
         return obj
 
     def query_page(self, page, lim):

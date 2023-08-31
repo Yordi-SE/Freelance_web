@@ -54,6 +54,17 @@ class UpdateForm(FlaskForm):
             user_email = storage.query_email(email.data)
             if user_email:
                 raise ValidationError('The User Email is already in use')
+
+class MaxSizeFileAllowed(FileAllowed):
+    def __init__(self, allowed_extensions, message=None, max_size=3 * 1024 * 1024):
+        super().__init__(allowed_extensions, message)
+        self.max_size = max_size
+
+    def __call__(self, form, field):
+        if field.data:
+            if len(field.data.read()) > self.max_size:
+                raise ValidationError(self.message or self.get_message())
+
 class UploadCv(FlaskForm):
     cv = FileField('Upload CV in PDF format', validators=[
         DataRequired(message='Please choose a file.'),
