@@ -87,8 +87,7 @@ form {
 }
 @media screen and (max-width: 400px) {
   form {
-
-    width: 320px;
+    width: 295px !important;
   }
   #bro, #h11 {
     font-size: 38px;

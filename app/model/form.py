@@ -76,9 +76,6 @@ class PostForm(FlaskForm):
     title = StringField('Job title', validators=[DataRequired(), Length(max=200)])
 
     job_type = StringField('job type', validators=[DataRequired(), Length(max=100)])
-    
-
-    email = StringField('Your account Email', validators=[DataRequired(), Email()])
 
     location = StringField('location', validators={DataRequired()})
 

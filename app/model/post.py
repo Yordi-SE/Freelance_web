@@ -13,7 +13,7 @@ from flask import request
 def post():
     form = PostForm()
     if form.validate_on_submit():
-        job = Jobs(title=form.title.data, job_type=form.job_type.data, location=form.location.data, level=form.level.data, vacancies=form.vacancies.data, salary=form.salary.data, deadline=form.deadline.data, description=form.description.data, user_email=form.email.data)
+        job = Jobs(title=form.title.data, job_type=form.job_type.data, location=form.location.data, level=form.level.data, vacancies=form.vacancies.data, salary=form.salary.data, deadline=form.deadline.data, description=form.description.data, user_email=current_user.email)
         storage.new(job)
         storage.save()
         flash("Job post successfully!", "success")
@@ -55,7 +55,7 @@ def post_update(post_id):
         objs.title = form.title.data
         storage.save()
         flash('You updated the successfully!', 'success')
-        return redirect(url_for('man.postId', post_id=post_id))
+        return redirect(url_for('blue.postId', post_id=post_id))
     elif request.method == 'GET':
         form.vacancies.data = objs.vacancies
         form.deadline.data = objs.deadline

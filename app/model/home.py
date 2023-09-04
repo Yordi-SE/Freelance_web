@@ -6,7 +6,11 @@ from flask_login import login_user, login_required, current_user, logout_user
 from flask import request
 
 
-@blue.route("/", methods=['POST', 'GET'])
+@blue.route("/")
+def landing():
+    return render_template('landing_page.html')
+
+@blue.route("/home", methods=['POST', 'GET'])
 @login_required
 def home():
 
