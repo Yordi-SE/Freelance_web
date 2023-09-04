@@ -1,5 +1,5 @@
 # JobLinker Network
-![image](https://github.com/Yordi-SE/Freelance_web/assets/111190441/bd4bd922-ba5b-4379-923f-6fd97e515cd6)
+![image](https://github.com/Yordi-SE/Freelance_web/assets/111190441/bdd7c445-81bb-4b0e-b93a-41c370c88055)
 
 Connecting Talent to Opportunities: Your Gateway to Freelance Success
 
