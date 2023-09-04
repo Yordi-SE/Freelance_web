@@ -30,7 +30,7 @@ My project's purpose is clear: to empower freelancers to thrive in the gig econo
   outline      job requirements, and reach top talent effortlessly. It's the perfect tool to connect with the perfect candidate.
 
   
--** Apply for a Job**
+- **Apply for a Job**
 
   For job seekers, our job application feature streamlines the process. Apply for your desired positions with just a few clicks. Upload    your resume, tailor your cover letter, and take the next step in your career journey hassle-free.
 
@@ -82,3 +82,22 @@ Apply: Select the jobs that interest you and submit your applications. When you 
 Keep an eye on your email and notifications for responses from employers. Engage in conversations and interviews to secure your next freelance gig.
 
 JobLinker Network is designed to streamline your freelancing journey. Whether you're a freelancer looking for exciting projects or an employer seeking top talent, our platform is here to simplify the process.
+
+## Technologies
+JobLinker Network is built using a combination of powerful technologies to provide a seamless and efficient experience for users. Here's an overview of the key technologies utilized in this project:
+
+ **MySQL Database**: Our platform relies on the MySQL relational database management system for robust and structured data storage.
+  
+  **SQLAlchemy ORM**: SQLAlchemy is used as the Object-Relational Mapping (ORM) framework to simplify database interactions, making data manipulation and retrieval more efficient.
+  
+  **Flask Web Framework**: The project is built on the Flask web framework, known for its simplicity and flexibility, enabling rapid development and easy scalability.
+  
+  **HTML**: We leverage HTML (Hypertext Markup Language) for structuring the content and presentation of web pages, ensuring compatibility and accessibility.
+  
+  **CSS**: Cascading Style Sheets (CSS) are used to define the visual layout and aesthetics of our platform, creating an appealing and user-friendly interface.
+  
+  **Bootstrap**: The Bootstrap framework is employed to enhance the project's responsiveness and design consistency across various devices and screen sizes.
+  
+  **JavaScript**: JavaScript adds interactivity and dynamic features to our platform, improving user engagement and functionality.
+
+These technologies work in harmony to deliver a secure, efficient, and user-centric Freelance Marketplace experience. Each component plays a crucial role in ensuring the platform's success and reliability.
