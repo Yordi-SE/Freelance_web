@@ -5,39 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Yordanos Lemmawork">
     <meta name="description" content="This is Freelancing website that used to post official job vacancies">
-    <title>Freelance Marketplace</title>
+    <title>JobLinker Network</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="icon" href="{{ url_for('static', filename='job_linker_logo.jpg') }}">
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   </head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="icon" type="icon" href="{{ url_for('static', filename='photo_2023-08-16_17-44-29.jpg') }}">
-  <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   <body>
-      <nav class="nav-bar">
-        <div class="menu-toggle">
-          <span></span>
-          <span></span>
-          <span></span>
+    <header  class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+		<a class="navbar-brand mr-4" href="{{ url_for('blue.landing') }}">JobLinker Net</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="#">Home</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              <a href="#foot" class="nav-item nav-link">Contact Us</a>
+              <a href="#AboutUs" class="nav-item nav-link">About Us</a>
+              <a href="{{ url_for('blue.register') }}" class="nav-item nav-link">Sign Up</a>
+              <a href="{{ url_for('blue.login') }}" class="nav-item nav-link">Login</a>
+            </div>
+          </div>
         </div>
-        <ul class="nav-list">
-          <li><a href="#foot">Contact Us</a></li>
-          <li><a href="#AboutUs">About Us</a></li>
-	  <li><a href="{{ url_for('blue.register') }}">Sign Up</a></li>
-	  <li><a href="{{ url_for('blue.login') }}">Login</a></li>
-          <li><a href="#">Home</a></li>
-        </ul>
       </nav>
+    </header>
     <div class="intro-container">
       <div class="intro">
 	      <img src="{{ url_for('static', filename='Add_a_heading.png') }}" alt="intro cover image that contains the heading text Your Next Career Opportunity Awaits and paragraph text Are you ready to unlock the doors to your dream career? We're here to help you take that exciting next step in your professional journey." width="100%"/>
       </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
       <div class="welcome">
         <h1>
-          Freelance Marketplace
+          JobLinker Net
         </h1>
         <h3>
-          Welcome to my website
+          Welcome to my portfolio website
         </h3>
         <p>
-	We're thrilled to welcome you to our <em>Freelance Marketplace</em> website, your trusted partner in finding your next career opportunity. Whether you're a seasoned professional or a fresh graduate, our platform connects you with a world of job possibilities. Explore, connect, and discover your dream job with us today.
+	We're thrilled to welcome you to our <em>JobLinker Net</em> website, your trusted partner in finding your next career opportunity. Whether you're a seasoned professional or a fresh graduate, our platform connects you with a world of job possibilities. Explore, connect, and discover your dream job with us today.
         </p>
       </div>
     </div>
@@ -113,7 +132,7 @@
         <p>
 	<strong><em>Software Engineer at Alx Software Engineering</em></strong><br/>
         </p>
-	<hr width="100%">
+	<hr width="100%" color="white">
         <p>
           Greetings! I'm Yordanos Lemmawork, a passionate Software Engineer dedicated to pushing the boundaries of technology to solve real-world challenges. I find inspiration in crafting innovative solutions that make a positive impact on people's lives.
           My journey in software engineering began with a desire to create, learn, and grow. I've had the privilege of gaining a solid foundation in this field, thanks to  Holberton School. At Holberton, I immersed myself in the world of coding, algorithms, and problem-solving. It was here that I realized the immense potential of technology to shape the future.
@@ -155,17 +174,106 @@
       </article>
       <a href="https://github.com/Yordi-SE/Freelance_web.git" target="_blank">Find Source Code</a>
     </div>
+    <div class="About-2n">
+      <h1>
+        About This Project
+      </h1>
+      <article class="About-article">
+        <h2>
+          Yordanos Lemmawork
+        </h2>
+        <dv class="profile-pic">
+          <img src="My_photo.jpg" alt="my profile photo" />
+        </dv>
+        <br>
+        <p>
+          <strong><em>Software Engineer at Alx Software Engineering</em></strong><br>
+        </p>
+        <hr width="100%" color="white">
+        <p>
+          Greetings! I'm Yordanos Lemmawork, a passionate Software Engineer dedicated to pushing the boundaries of technology to solve real-world challenges. I find inspiration in crafting innovative solutions that make a positive impact on people's lives.
+          My journey in software engineering began with a desire to create, learn, and grow. I've had the privilege of gaining a solid foundation in this field, thanks to  Holberton School. At Holberton, I immersed myself in the world of coding, algorithms, and problem-solving. It was here that I realized the immense potential of technology to shape the future.
+        </p>
+      </article>
+    <a href="https://github.com/Yordi-SE/Freelance_web.git" target="_blank">Find Source Code</a>
+    </div>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              A Portfolio Project for Holberton School
+            </button>
+          </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            My journey as a software engineer has been enriched by Holberton School, where I've honed my skills and embraced the philosophy of tackling complex problems creatively. This project is my way of giving back and showcasing the innovative spirit instilled in me by Holberton.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Inspired by 'Afriwork Applicant Bot'
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+            The driving force behind this portfolio project is the remarkable 'Afriwork Applicant Bot.' This innovative Telegram bot has redefined the job application process by simplifying it for freelancers. Witnessing its impact and the possibilities it unlocked deeply inspired me.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Bringing Efficiency to Job Hunting
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+            My goal with this project is to capture the essence of 'Afriwork Applicant Bot' and adapt it to a broader context. I aim to make job hunting more accessible and efficient for everyone, not just within Telegram channels but on a dedicated website.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+              Join the Journey
+            </button>
+          </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+            I invite you to explore my portfolio project and see how inspiration from 'Afriwork Applicant Bot' has led to the creation of a user-friendly platform for job seekers and employers alike.
+
+            Thank you for joining me on this journey of innovation and efficiency in the world of job hunting!
+          </div>
+        </div>
+      </div>
+    </div>
+ 
     <footer class="footer" id="foot">
       <p>
         MY LINKS
       </p>
-      <div class="footer-icons">
-	      <a href="https://t.me/Jprecious" target="_blank"><img src="{{ url_for('static', filename='photo_2023-09-02_23-56-51.jpg') }}" alt="Telegram Logo"></a>
-	      <a href="https://www.facebook.com/profile.php?id=100069853353595" target="_blank"><img src="{{ url_for('static', filename='fb_logo.png') }}" alt="FaceBook Logo"></a>
-	      <a href="https://twitter.com/Y___L1" target="_blank"><img src="{{ url_for('static', filename='twitter_logo.jpeg') }}" alt="Twitter Logo"></a>
-	      <a href="https://github.com/Yordi-SE" target="_blank"><img src="{{ url_for('static', filename='github_log.jpeg') }}" alt="Github Logo"></a>
-	      <a href="mailto:lemmaworkyordanos@gmail.com" target="_blank"><img src="{{ url_for('static', filename='Gmail_logo.png') }}" alt="Gmail Logo"></a>
+      <div class="socialIcons">
+        <a href="https://t.me/Jprecious" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100069853353595" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://twitter.com/Y___L1" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+        <a href="https://github.com/Yordi-SE" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:lemmaworkyordanos@gmail.com" target="_blank"><i class="fa-brands fa-google"></i></a>
       </div>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
