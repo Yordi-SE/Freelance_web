@@ -1,4 +1,5 @@
 from flask import render_template, url_for, redirect, flash, send_from_directory, abort
+import uuid
 from model import storage, blue
 from werkzeug.utils import secure_filename
 from model.form import PostForm, PostEditForm
@@ -13,32 +14,29 @@ from flask import request
 def post():
     form = PostForm()
     if form.validate_on_submit():
-        job = Jobs(title=form.title.data, job_type=form.job_type.data, location=form.location.data, level=form.level.data, vacancies=form.vacancies.data, salary=form.salary.data, deadline=form.deadline.data, description=form.description.data, user_email=current_user.email)
+        job = Jobs(title=form.title.data, job_type=form.job_type.data, location=form.location.data, level=form.level.data, vacancies=form.vacancies.data, salary="{} {}".format(form.salary.data, form.Currency.data), deadline=form.deadline.data, description=form.description.data, user_email=current_user.email, job_id=str(uuid.uuid4()))
         storage.new(job)
         storage.save()
         flash("Job post successfully!", "success")
         return redirect(url_for('blue.home'))
     return render_template('post.html', form=form)
 
-@blue.route("/post/<int:post_id>")
+@blue.route("/post/<job_id>")
 @login_required
-def postId(post_id):
+def postId(job_id):
     applied = False
-    user_job_id = storage.query_email_user_job(current_user.email)
+    objs = storage.query_job_by_uuid(job_id)
+    user_job_id = storage.query_email_user_job(current_user.email, objs.id)
     if user_job_id:
-        for posts in user_job_id:
-            if post_id in posts:
-                applied = True
-                break
-    objs = storage.query_job(post_id)
+        applied = True
     if objs:
         return render_template('edit_post.html', applied=applied, title=objs.title, objs=objs)
     abort(404)
 
-@blue.route("/post/<int:post_id>/update", methods=['POST', 'GET'])
+@blue.route("/post/<post_id>/update", methods=['POST', 'GET'])
 @login_required
 def post_update(post_id):
-    objs = storage.query_job(post_id)
+    objs = storage.query_job_by_uuid(post_id)
     if objs:
         if objs.user_email != current_user.email:
             return render_template('forbiden.html')
@@ -51,11 +49,11 @@ def post_update(post_id):
         objs.description = form.description.data
         objs.level = form.level.data
         objs.location = form.location.data
-        objs.salary = form.salary.data
+        objs.salary = "{} {}".format(form.salary.data, form.Currency.data)
         objs.title = form.title.data
         storage.save()
         flash('You updated the successfully!', 'success')
-        return redirect(url_for('blue.postId', post_id=post_id))
+        return redirect(url_for('blue.postId', job_id=post_id))
     elif request.method == 'GET':
         form.vacancies.data = objs.vacancies
         form.deadline.data = objs.deadline
@@ -64,13 +62,14 @@ def post_update(post_id):
         form.level.data = objs.level
         form.location.data = objs.location
         form.title.data = objs.title
-        form.salary.data = objs.salary
+        form.salary.data = int(objs.salary.split(' ')[0])
+        form.Currency.data = objs.salary.split(' ')[1]
     return render_template('post_update.html', title='Update Post', form=form)
 
-@blue.route("/delete/<int:post_id>", methods=['POST', 'GET'])
+@blue.route("/delete/<post_id>", methods=['POST', 'GET'])
 @login_required
 def delete(post_id):
-    objs = storage.query_job(post_id)
+    objs = storage.query_job_by_uuid(post_id)
     if objs:
         if request.method == 'GET':
             return render_template(url_for('postId', post_id=post_id), title=objs.title)

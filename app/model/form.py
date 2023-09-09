@@ -1,25 +1,25 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, TelField, PasswordField, SubmitField, ValidationError, IntegerField, TextAreaField
+from wtforms import StringField, TelField, PasswordField, SubmitField, ValidationError, IntegerField, TextAreaField, SelectField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, EqualTo, NumberRange
 from model import storage
 
 
 class RegistrationForm(FlaskForm):
-    first_name = StringField('firstname', validators=[DataRequired(), Length(max=100)])
+    first_name = StringField('First Name', validators=[DataRequired(), Length(max=100)])
 
-    last_name = StringField('lastname', validators=[DataRequired(), Length(max=100)])
-    
-    phone = TelField('tele', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired(), Length(max=100)])
+
+    phone = TelField('Phone', validators=[DataRequired()])
 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-    birthdate = StringField('birthdate', render_kw={"placeholder": "DD/MM/YYYY"}, validators={DataRequired()})
+    birthdate = StringField('Birthdate', render_kw={"placeholder": "DD/MM/YYYY"}, validators=[DataRequired()])
 
-    password = PasswordField('password', validators=[DataRequired(), Length(min=4)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
 
-    confirm_password = PasswordField('confirm Password', validators=[DataRequired(), EqualTo('password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
 
     submit = SubmitField('Sign Up')
 
@@ -40,12 +40,12 @@ class UpdateForm(FlaskForm):
     first_name = StringField('firstname', validators=[DataRequired(), Length(max=100)])
 
     last_name = StringField('lastname', validators=[DataRequired(), Length(max=100)])
-    
+
     phone = TelField('tele', validators=[DataRequired()])
 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-    birthdate = StringField('birthdate', render_kw={"placeholder": "DD/MM/YYYY"}, validators={DataRequired()})
+    birthdate = StringField('birthdate', render_kw={"placeholder": "DD/MM/YYYY"}, validators=[DataRequired()])
 
     submit = SubmitField('Update')
 
@@ -73,26 +73,28 @@ class UploadCv(FlaskForm):
     submit = SubmitField('Submit')
 
 class PostForm(FlaskForm):
-    title = StringField('Job title', validators=[DataRequired(), Length(max=200)])
+    title = StringField('Job Title', validators=[DataRequired(), Length(max=200)])
 
-    job_type = StringField('job type', validators=[DataRequired(), Length(max=100)])
+    job_type = StringField('Job Type', validators=[DataRequired(), Length(max=100)])
 
-    location = StringField('location', validators={DataRequired()})
+    location = StringField('Location', validators=[DataRequired()])
 
-    level = StringField('level', validators=[DataRequired(), Length(max=200)])
+    level = StringField('Level', validators=[DataRequired(), Length(max=200)])
 
-    vacancies = IntegerField('vacancies', validators=[DataRequired()])
+    vacancies = IntegerField('Vacancies', validators=[DataRequired()])
+    currency_choises = [('ETB', 'ETB'), ('€', 'EUR €'), ('$', 'USD $'), ('£', 'GBP £')]
+    Currency = SelectField('', validators=[DataRequired()], choices=currency_choises)
 
     salary = IntegerField('Salary')
 
-    deadline = StringField('Application Deadline', render_kw={"placeholder": "DD/MM/YYYY"}, validators={DataRequired()})   
-    
-    description = TextAreaField('Job description', validators=[DataRequired(), Length(max=1000)])
+    deadline = StringField('Application Deadline', render_kw={"placeholder": "DD/MM/YYYY"}, validators=[DataRequired()])  
+
+    description = TextAreaField('Job Description', validators=[DataRequired(), Length(max=1000)])
 
     submit = SubmitField('Post')
 
     def validate_email(self, email):
-        
+
         if current_user.email != email.data:
             raise ValidationError('Please Use Your Own Account Email')
 
@@ -100,17 +102,20 @@ class PostEditForm(FlaskForm):
     title = StringField('Job title', validators=[DataRequired(), Length(max=200)])
 
     job_type = StringField('job type', validators=[DataRequired(), Length(max=100)])
-    
-    location = StringField('location', validators={DataRequired()})
+
+    location = StringField('location', validators=[DataRequired()])
 
     level = StringField('level', validators=[DataRequired(), Length(max=200)])
 
     vacancies = IntegerField('vacancies', validators=[DataRequired()])
 
+    currency_choises = [('ETB', 'ETB'), ('€', 'EUR €'), ('$', 'USD $'), ('£', 'GBP £')]
+    Currency = SelectField('', validators=[DataRequired()], choices=currency_choises)
     salary = IntegerField('Salary')
 
-    deadline = StringField('Application Deadline', render_kw={"placeholder": "DD/MM/YYYY"}, validators={DataRequired()})   
-    
+
+    deadline = StringField('Application Deadline', render_kw={"placeholder": "DD/MM/YYYY"}, validators=[DataRequired()])  
+
     description = TextAreaField('Job description', validators=[DataRequired(), Length(max=1000)])
 
     submit = SubmitField('Post')

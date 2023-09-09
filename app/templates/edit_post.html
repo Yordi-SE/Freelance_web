@@ -29,13 +29,13 @@
   
             <div style="margin-bottom: 45px;">
 	{% if current_user.email == objs.user_email %}
-              <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.post_update', post_id=objs.id) }}">Update Post</a>
+              <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.post_update', post_id=objs.job_id) }}">Update Post</a>
               <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button>
 	      {% endif %}
               {% if current_user.filename and (applied == False)  and current_user.email != objs.user_email %}
-              <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.apply', post_id=objs.id) }}">Apply</a>
+              <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.apply', post_id=objs.job_id) }}">Apply</a>
 	      {% elif applied == True %}
-	      <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.apply', post_id=objs.id) }}">Reapply</a>
+	      <a class="btn btn-secondary btn-sm m-1"  href="{{ url_for('blue.apply', post_id=objs.job_id) }}">Reapply</a>
               {% endif %}
             </div>
         </div>
@@ -50,7 +50,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form action="{{ url_for('blue.delete', post_id=objs.id) }}" method="POST">
+                <form action="{{ url_for('blue.delete', post_id=objs.job_id) }}" method="POST">
                   <input class="btn btn-danger" type="submit" value="Delete">
                 </form>
               </div>

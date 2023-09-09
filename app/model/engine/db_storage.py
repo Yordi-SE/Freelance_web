@@ -50,7 +50,10 @@ class DBStorage:
         from model.base_model import Jobs
         obj = self.__session.query(Jobs).filter(Jobs.id == field).first()
         return obj
-    
+    def query_job_by_uuid(self, field):
+        from model.base_model import Jobs
+        obj = self.__session.query(Jobs).filter(Jobs.job_id == field).first()
+        return obj
     def query_job_title(self, field):
         from model.base_model import Jobs
         obj = self.__session.query(Jobs).filter(Jobs.title == field).all()
@@ -61,9 +64,9 @@ class DBStorage:
         obj = self.__session.query(Jobs).filter(Jobs.user_email == field)
         return obj
     
-    def query_email_user_job(self, field):
+    def query_email_user_job(self, field, field_2):
         from model.base_model import Applied
-        obj = self.__session.query(Applied.job_id).filter(Applied.user_email == field).all()
+        obj = self.__session.query(Applied.job_id).filter(Applied.user_email == field).filter(Applied.job_id == field_2).all()
         return obj
 
     def query_page(self, page, lim):

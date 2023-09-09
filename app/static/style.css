@@ -286,3 +286,41 @@ video {
   transition: 0.5s;
 }
 
+.logo-cont {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-cont .logo-img {
+  flex: 0.5;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 100%;
+  min-width: 150px;
+  min-height: 150px;
+}
+
+.logo-img img {
+	width: 70%;
+	height: 50%;
+	border-radius: 50%;
+	border: 3px solid black;
+}
+
+@media (max-width: 950px) {
+  .logo-cont {
+    flex-direction: column;
+  }
+  .logo-cont .logo-img {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 60%;
+    height: 60%;
+    
+  }
+  .logo-img img {
+    height: 100%;
+}
+}

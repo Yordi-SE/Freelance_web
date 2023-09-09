@@ -77,14 +77,14 @@
         <div class="form-group">
           {{ form.salary.label(class="form-control-label") }}
           {% if form.salary.errors %}
-          {{ form.salary(class="form-control form-control-lg is-invalid") }}
+          {{ form.Currency(class="form-select form-select-lg") }}{{ form.salary(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.salary.errors %}
                <span>{{ error }}</span>
               {% endfor %}
             </div>
           {% else %}
-          {{ form.salary(class="form-control form-control-lg") }}
+          {{ form.Currency(class="form-select form-select-lg") }}{{ form.salary(class="form-control form-control-lg") }}
           {% endif %}
         </div>
         <div class="form-group">

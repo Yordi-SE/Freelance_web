@@ -42,12 +42,16 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
+                <div class="alert alert-{{ category }} text-dark">
                   {{ message }}
                 </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
+    <div class="logo-cont">
+      <div class="logo-img">
+        <img src="{{ url_for('static', filename='job_linker_logo.jpg') }}" alt="logo of the website"/>
+      </div>
       <div class="welcome">
         <h1>
           JobLinker Net
@@ -59,6 +63,7 @@
 	We're thrilled to welcome you to our <em>JobLinker Net</em> website, your trusted partner in finding your next career opportunity. Whether you're a seasoned professional or a fresh graduate, our platform connects you with a world of job possibilities. Explore, connect, and discover your dream job with us today.
         </p>
       </div>
+    </div>
     </div>
 
     <section>
